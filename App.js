@@ -8,8 +8,8 @@ import BikeRentScreen from './src/screens/BikeRentScreen'
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (
-    <NavigationContainer>
-        <Stack.Navigator>
+    <NavigationContainer > 
+        <Stack.Navigator screenOptions={{headerShown:false}}>
           <Stack.Screen name="Home" component={HomeScreen}/>
           <Stack.Screen name="Bike Rent" component={BikeRentScreen} />
       </Stack.Navigator>
