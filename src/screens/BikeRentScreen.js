@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     logoSection:{
         flexDirection:'row',
         justifyContent:'space-between',
-        marginTop:30,
+        marginTop:40,
         height:30
     }
 })
