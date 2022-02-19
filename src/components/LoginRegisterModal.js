@@ -50,6 +50,7 @@ export default function LoginRegisterModal(props){
                 </TouchableOpacity>
             </View>
             <TextInput style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
+            <TextInput style={styles.input} placeholderTextColor="#ccc" placeholder='Number'/>
             <TextInput style={styles.input} placeholderTextColor="#ccc" placeholder='Password'/>
             <View style={{flexDirection:'row',justifyContent:'space-evenly',width:'100%',marginVertical:10}}>
                 <TouchableOpacity
