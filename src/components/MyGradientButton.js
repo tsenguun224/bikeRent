@@ -2,7 +2,7 @@ import { TouchableOpacity,Text ,StyleSheet} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient'
 
 const MyGradientButton = (props)=>{
-    return <TouchableOpacity onPress={props.goBikeRent} style={[styles.btn,{width:props.width}]}>
+    return <TouchableOpacity onPress={props.onPress} style={[styles.btn,{width:props.width}]}>
                 <LinearGradient style={[styles.linear,{borderWidth:props.borderWidth,borderColor:props.borderColor}]}  colors={[props.color1,props.color2]}>
                     <Text style={[styles.text,{color:props.textColor}]}>{props.title}</Text>
                 </LinearGradient>

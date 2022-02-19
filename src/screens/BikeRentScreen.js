@@ -9,8 +9,9 @@ export default function BikeRentScreen() {
         <View style={styles.layoutOne}>
             <View style={styles.logoSection}>
                 <Text style={styles.logo}>br</Text>
-                <TouchableOpacity>
-                    <Ionicons name="add" size={24} color="black" />
+                <TouchableOpacity style={{flexDirection:'row',justifyContent:'center'}}>
+                    <Text style={{fontSize:18,marginHorizontal:10}}>Dugui nemeh</Text>
+                    <Ionicons name="add" size={18} color="black" />
                 </TouchableOpacity>
             </View>
             <View style={styles.inputSection}>

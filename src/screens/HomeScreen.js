@@ -1,13 +1,22 @@
 import {View,Text,ImageBackground,StyleSheet} from 'react-native'
 import MyGradientButton from '../components/MyGradientButton'
-
+import LoginRegisterModal from '../components/LoginRegisterModal'
+import { useState } from 'react'
 
 
 
 export default function HomeScreen({navigation}){
     const img = 'https://cdn1.photostockeditor.com/c/2312/black-and-white-black-road-bicycle-handle-with-black-background-wallpaper-wallpaper-image.jpg'
+    const [isModalVisible,setIsModalVisible] = useState(false)
     const toBikeRentSection = ()=>{
+        setIsModalVisible(true)
+    }
+    const hideModal=()=>{
+        setIsModalVisible(false)
+    }
+    const goBikeRent = ()=>{
         navigation.navigate('Bike Rent')
+        hideModal()
     }
     return <ImageBackground style={{width:'100%',height:'100%'}} source={{uri:img}}>
             <View style={styles.layoutOne}>
@@ -16,8 +25,9 @@ export default function HomeScreen({navigation}){
             <View style={styles.layoutTwo}>
                 <Text style={styles.text}>bike rent</Text>
                 <Text style={{color:'#ccc',marginVertical:10}}>Largest bike rent service in Ulaanbaatar</Text>
-                <MyGradientButton textColor="#fff"  width={110} title='Get started' goBikeRent={toBikeRentSection} color1='#7F00FF' color2='#E100FF'/>
+                <MyGradientButton textColor="#fff"  width={110} title='Get started' onPress={toBikeRentSection} color1='#7F00FF' color2='#E100FF'/>
             </View>
+            <LoginRegisterModal goBikeRent={goBikeRent} hideModal={hideModal} isModalVisible={isModalVisible} />
         </ImageBackground>
 }
 const styles = StyleSheet.create({
