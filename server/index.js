@@ -3,14 +3,19 @@ const server = express();
 const mongoose = require('mongoose');
 const bp = require('body-parser');
 const cors = require('cors');
-
+const passport = require('passport')
 
 const userRouter = require('./routes/users')
 
 
-server.use(bp.json());
+server.use(bp.urlencoded({
+    extended:false
+}));
 server.use(cors());
-server.use(userRouter)
+
+server.use(passport.initialize())
+require('./passport')(passport);
+server.use(userRouter);
 
 
 
