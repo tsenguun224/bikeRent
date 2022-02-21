@@ -1,10 +1,26 @@
 import {View,Modal,Text,TouchableOpacity,StyleSheet,TextInput} from 'react-native'
 import { useState } from 'react';
-
-
+import { useSelector,useDispatch } from 'react-redux';
+import { loginUser,registerUser } from '../redux/actions/authAction';
 
 export default function LoginRegisterModal(props){
-  const [isLogin,setLogin]= useState(false)  
+  const [isLogin,setLogin]= useState(false)
+  const [loginEmail,setLoginEmail] = useState();
+  const [loginPass,setLoginPass] = useState();
+  const [regEmail,setRegEmail] = useState();
+  const [regName, setRegName] = useState() ;
+  const [regPassword, setRegPassword] = useState();
+  const dispatch = useDispatch();
+  const users = useSelector(state => state)
+  const toLogin = ()=>{
+    const userData  = {
+      email:loginEmail,
+      password:loginPass
+    }
+    dispatch(loginUser(userData))
+    
+  }
+  
   return (
     <View style={styles.centeredView}>
         {
@@ -21,8 +37,8 @@ export default function LoginRegisterModal(props){
                               <Text style={{color:'blue'}}>Register</Text>
                           </TouchableOpacity>
                       </View>
-                      <TextInput style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
-                      <TextInput style={styles.input} placeholderTextColor="#ccc" placeholder='Password'/>
+                      <TextInput onChange={e => setLoginEmail(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
+                      <TextInput onChange={e => setLoginPass(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Password'/>
                       <View style={{flexDirection:'row',justifyContent:'space-evenly',width:'100%',marginVertical:10}}>
                           <TouchableOpacity
                           style={[styles.button, styles.buttonClose]}
@@ -30,7 +46,7 @@ export default function LoginRegisterModal(props){
                           >
                           <Text style={styles.textStyle}>Cancel</Text>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={props.goBikeRent} style={[styles.buttonOpen,styles.button]}>
+                          <TouchableOpacity onPress={toLogin} style={[styles.buttonOpen,styles.button]}>
                               <Text>Login</Text>
                           </TouchableOpacity>
                       </View>
@@ -49,9 +65,9 @@ export default function LoginRegisterModal(props){
                     <Text style={{color:'blue'}}>Login</Text>
                 </TouchableOpacity>
             </View>
-            <TextInput style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
-            <TextInput style={styles.input} placeholderTextColor="#ccc" placeholder='Name'/>
-            <TextInput style={styles.input} placeholderTextColor="#ccc" placeholder='Password'/>
+            <TextInput onChange={e => setRegEmail(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
+            <TextInput onChange={e => setRegName(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Name'/>
+            <TextInput onChange={e => setRegPassword(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Password'/>
             <View style={{flexDirection:'row',justifyContent:'space-evenly',width:'100%',marginVertical:10}}>
                 <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}

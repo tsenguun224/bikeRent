@@ -18,11 +18,10 @@ export const registerUser = (userData) => dispatch =>{
 }
 export const loginUser = userData => dispatch =>{
     axios
-    .post('http://localhost:3001/bikeRent/loginUser',userData)
+    .post('http://localhost:3001/bikeRent/loginUser', userData)
     .then(res =>{
         const {token} = res.data;
         localStorage.setItem('jwtToken',token);
-        setAuthToken(token);
         const decoded = jwt_decode(token);
     })
     .catch(err =>dispatch({
