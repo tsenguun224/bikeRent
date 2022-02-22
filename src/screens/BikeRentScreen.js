@@ -1,4 +1,4 @@
-import {View,Text,StyleSheet,TextInput,TouchableOpacity} from 'react-native'
+import {View,Text,StyleSheet,TextInput,TouchableOpacity,FlatList} from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import MyGradientButton from '../components/MyGradientButton';
 
@@ -25,7 +25,9 @@ export default function BikeRentScreen() {
                 <MyGradientButton borderColor='#ccc' borderWidth={1} textColor='#000' width="45%" title='All' color1='#fff' color2="#fff"/>
             </View>
         </View>
-        <View style={styles.layoutTwo}></View>
+        <View style={styles.layoutTwo}>
+            <FlatList/>
+        </View>
     </View>
 }
 const styles = StyleSheet.create({

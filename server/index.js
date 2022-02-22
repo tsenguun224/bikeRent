@@ -6,7 +6,7 @@ const cors = require('cors');
 const passport = require('passport')
 
 const userRouter = require('./routes/users')
-
+const bikeRouter = require('./routes/bike')
 
 server.use(bp.urlencoded({
     extended:false
@@ -16,7 +16,7 @@ server.use(cors());
 server.use(passport.initialize())
 require('./passport')(passport);
 server.use(userRouter);
-
+server.use(bikeRouter)
 
 
 mongoose.connect('mongodb+srv://shop_admin:123@cluster0.oblkb.mongodb.net/bikeRentDataBase')
