@@ -1,15 +1,21 @@
 import {View,Text,StyleSheet,TextInput,TouchableOpacity,FlatList} from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import MyGradientButton from '../components/MyGradientButton';
+import { useState } from 'react';
+import BikeInserModal from '../components/BikeInserModal';
 
 
 
 export default function BikeRentScreen() {
+    const [modalVisible,setModalVisible] = useState(false);
+    const openInsertBikeModal = () => {
+        setModalVisible(true)
+    }
     return <View>
         <View style={styles.layoutOne}>
             <View style={styles.logoSection}>
                 <Text style={styles.logo}>br</Text>
-                <TouchableOpacity style={{flexDirection:'row',justifyContent:'center'}}>
+                <TouchableOpacity onPress={openInsertBikeModal} style={{flexDirection:'row',justifyContent:'center'}}>
                     <Text style={{fontSize:18,marginHorizontal:10}}>Dugui nemeh</Text>
                     <Ionicons name="add" size={18} color="black" />
                 </TouchableOpacity>
@@ -27,7 +33,9 @@ export default function BikeRentScreen() {
         </View>
         <View style={styles.layoutTwo}>
             <FlatList/>
+            <BikeInserModal modalVisible={modalVisible}/>
         </View>
+        
     </View>
 }
 const styles = StyleSheet.create({

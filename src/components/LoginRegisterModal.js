@@ -20,7 +20,15 @@ export default function LoginRegisterModal(props){
     dispatch(loginUser(userData))
     
   }
-  
+  const toRegister = () =>{
+    const userData = {
+      email:regEmail,
+      name:regName,
+      password:regPassword
+    }
+    dispatch(registerUser(userData));
+
+  }
   return (
     <View style={styles.centeredView}>
         {
@@ -46,7 +54,7 @@ export default function LoginRegisterModal(props){
                           >
                           <Text style={styles.textStyle}>Cancel</Text>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={toLogin} style={[styles.buttonOpen,styles.button]}>
+                          <TouchableOpacity onPress={props.goBike} style={[styles.buttonOpen,styles.button]}>
                               <Text>Login</Text>
                           </TouchableOpacity>
                       </View>

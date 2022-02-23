@@ -27,7 +27,7 @@ export default function HomeScreen({navigation}){
                 <Text style={{color:'#ccc',marginVertical:10}}>Largest bike rent service in Ulaanbaatar</Text>
                 <MyGradientButton textColor="#fff"  width={110} title='Get started' onPress={toBikeRentSection} color1='#7F00FF' color2='#E100FF'/>
             </View>
-            <LoginRegisterModal goBikeRent={goBikeRent} hideModal={hideModal} isModalVisible={isModalVisible} />
+            <LoginRegisterModal goBike={goBikeRent} hideModal={hideModal} isModalVisible={isModalVisible} />
         </ImageBackground>
 }
 const styles = StyleSheet.create({
