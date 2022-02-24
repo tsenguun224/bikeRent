@@ -1,22 +1,37 @@
-import {View,Text,StyleSheet,TextInput,TouchableOpacity,FlatList} from 'react-native'
+import {View,Text,StyleSheet,TextInput,TouchableOpacity,FlatList,ActivityIndicator,ImageBackground} from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import MyGradientButton from '../components/MyGradientButton';
-import { useState } from 'react';
 import BikeInserModal from '../components/BikeInserModal';
+import {addBike,loadBike} from '../redux/actions/bikeActions'
+import { useState,useEffect } from 'react';
+import { useDispatch,useSelector } from 'react-redux';
+
 
 
 
 export default function BikeRentScreen() {
     const [modalVisible,setModalVisible] = useState(false);
+
     const openInsertBikeModal = () => {
         setModalVisible(true)
     }
-    return <View>
+    const closeModal = () =>{
+        setModalVisible(false)
+    }
+    const bikes = useSelector(state => {return state.bikes})
+    const dispatch = useDispatch();
+    
+    
+    useEffect(()=>{
+        dispatch(loadBike())
+    },[])
+    
+    return <View style={{flex:1}}>
         <View style={styles.layoutOne}>
             <View style={styles.logoSection}>
                 <Text style={styles.logo}>br</Text>
                 <TouchableOpacity onPress={openInsertBikeModal} style={{flexDirection:'row',justifyContent:'center'}}>
-                    <Text style={{fontSize:18,marginHorizontal:10}}>Dugui nemeh</Text>
+                    <Text style={{fontSize:18,marginHorizontal:10}}>Insert bike</Text>
                     <Ionicons name="add" size={18} color="black" />
                 </TouchableOpacity>
             </View>
@@ -30,10 +45,18 @@ export default function BikeRentScreen() {
                 <MyGradientButton textColor="#fff" width='45%' title='Popular' color1='#7F00FF' color2='#E100FF'/>
                 <MyGradientButton borderColor='#ccc' borderWidth={1} textColor='#000' width="45%" title='All' color1='#fff' color2="#fff"/>
             </View>
+            <BikeInserModal modalClose={closeModal} modalVisible={modalVisible}/>
         </View>
         <View style={styles.layoutTwo}>
-            <FlatList/>
-            <BikeInserModal modalVisible={modalVisible}/>
+            {
+                bikes.bikes ? (<FlatList keyExtractor={item => item._id} data={bikes.bikes} renderItem={({item})=>(
+                    <TouchableOpacity style={[{width:'100%',height:150,backgroundColor:'black',flex:1,alignItems:'center',justifyContent:'center'}]}>
+                        <ImageBackground style={{width:'100%',height:'100%',alignItems:'center',justifyContent:'center'}} source={{uri:item.bikeImg}}>
+                            <Text style={{color:'white'}}>{item.bikeName}</Text>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                )}/>):<ActivityIndicator/>
+            }
         </View>
         
     </View>
@@ -41,13 +64,13 @@ export default function BikeRentScreen() {
 const styles = StyleSheet.create({
     layoutOne:{
         flex:1,
-        marginHorizontal:20
+        marginHorizontal:20,
     },
     layoutTwo:{
         flex:2,
-        width:'100%',
         marginHorizontal:20,
-        justifyContent:'flex-start',
+        justifyContent:'center',
+        marginTop:60,
     },
     logo:{
         width:30,

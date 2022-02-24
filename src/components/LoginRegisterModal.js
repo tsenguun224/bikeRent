@@ -2,6 +2,9 @@ import {View,Modal,Text,TouchableOpacity,StyleSheet,TextInput} from 'react-nativ
 import { useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { loginUser,registerUser } from '../redux/actions/authAction';
+import axios from 'axios';
+
+
 
 export default function LoginRegisterModal(props){
   const [isLogin,setLogin]= useState(false)
@@ -12,13 +15,13 @@ export default function LoginRegisterModal(props){
   const [regPassword, setRegPassword] = useState();
   const dispatch = useDispatch();
   const users = useSelector(state => state)
-  const toLogin = ()=>{
-    const userData  = {
+  const toLogin = async () =>{
+    const loginUserData  = {
       email:loginEmail,
       password:loginPass
     }
-    dispatch(loginUser(userData))
-    
+    const {data} = await axios({method:'POST',url:'http://localhost:3001/bikeRent/loginUser',data:loginUserData,headers:{"Content-Type":'application/json'}})
+    console.log(data)    
   }
   const toRegister = () =>{
     const userData = {
@@ -40,10 +43,8 @@ export default function LoginRegisterModal(props){
                   <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                       <View style={{flexDirection:'row',justifyContent:'space-between',width:200,marginVertical:15}}>
-                          <Text style={{fontSize:20}}>Login</Text>
-                          <TouchableOpacity onPress={()=>setLogin(true)}>
-                              <Text style={{color:'blue'}}>Register</Text>
-                          </TouchableOpacity>
+                          <Text style={{fontSize:28}}>Login</Text>
+                          
                       </View>
                       <TextInput onChange={e => setLoginEmail(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
                       <TextInput onChange={e => setLoginPass(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Password'/>
@@ -54,10 +55,18 @@ export default function LoginRegisterModal(props){
                           >
                           <Text style={styles.textStyle}>Cancel</Text>
                           </TouchableOpacity>
-                          <TouchableOpacity onPress={props.goBike} style={[styles.buttonOpen,styles.button]}>
+                          <TouchableOpacity onPress={toLogin} style={[styles.buttonOpen,styles.button]}>
                               <Text>Login</Text>
                           </TouchableOpacity>
                       </View>
+                      <View style={{flexDirection:'row',justifyContent:'space-between',width:200,marginVertical:15}}>
+                            <TouchableOpacity>
+                              <Text style={{color:'#000'}}>Forgot password?</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>setLogin(true)}>
+                                <Text style={{color:'blue'}}>Register</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                   </View>
                 </Modal>):

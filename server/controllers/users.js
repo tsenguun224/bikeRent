@@ -3,15 +3,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 
-const validateRegisterInput = require("../validation/register");
-const validateLoginInput = require("../validation/login");
-
 class UserController {
     registerUser(req,res){
-        const { errors, isValid } = validateRegisterInput(req.body);
-        if(!isValid){
-            return res.status(400).json(errors);
-        };
+        
 
         User.findOne({email:req.body.email}).then(user =>{
             if(user){
@@ -36,47 +30,42 @@ class UserController {
         })
         
     }
-    loginUser(req,res){
-        const {errors,isValid} = validateLoginInput(req.body);
-        if(!isValid){
-            return res.status(400).json(errors);
-        }
+   async loginUser(req,res){
+       
 
 
         const email = req.body.email;
         const password = req.body.password;
 
-
-        User.findOne({email}).then((user) =>{
+        try{
+            const user = await User.findOne({email:email});
             if(!user){
-                return res.status(400).json({email:'Email not found'})
-            }
+                res.status(400).json({message:'user not found'})
+            }else{
                 bcrypt.compare(password,user.password).then(isMatch =>{
                     if(isMatch){
-                        
                         const payload = {
-                            id:user.id,
+                            id:user._id,
                             name:user.name
                         }
-                        jwt.sign(
-                            payload,
-                            'tsenguun',
-                            {
-                                expiresIn:31556926
-                            },
-                            (err,token)=>{
-                                res.json({success:true,
-                                token:"Bearer " + token
-                            })
-                            }
-                        )
+                        jwt.sign(payload,'tsenguun',{expiresIn:'2h'},(err,token)=>{
+                            if(err) return err
+                            res.json({token:"Bearer "+ token})
+                        })
                     }else{
-                        return res.status(400).json({passwordInCorrect:'Password is incorrect'})
+                        res.status(400).json({message:'Email or password wrong'})
                     }
+                    
                 })
-            
-        })
+                .catch(err => console.log(err))
+                    
+                
+            }
+        }catch(err){
+            console.log(err)
+        }
         
+       
     }
 }
 

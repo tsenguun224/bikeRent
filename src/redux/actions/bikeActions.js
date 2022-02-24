@@ -1,3 +1,4 @@
+import axios from "axios"
 import { ADD_BIKE,LOAD_BIKE } from "./type"
 export const addBike = (newBike) =>{
     return {
@@ -6,7 +7,11 @@ export const addBike = (newBike) =>{
     }
 }
 export const loadBike = () =>{
-    return {
-        type:LOAD_BIKE
+    return async (dispatch) => {
+         const {data}  = await axios.get('http://192.168.1.3:3001/bikeRent/getBikes')
+        dispatch({
+            type:LOAD_BIKE,
+            data:data
+        })
     }
 }

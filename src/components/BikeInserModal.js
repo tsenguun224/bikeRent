@@ -9,18 +9,23 @@ export default BikeInsertModal = (props) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={props.modalVisible}>
+        visible={props.modalVisible}
+       >
             <View style={styles.modalView}>
-                <Text style={{fontSize:30,fontWeight:'bold'}}></Text>
-                <TextInput placeholder='BikeName'/>
-                <TextInput placeholder='BikePrice'/>
-                <TextInput placeholder='Bike Image' />
-                <View style={{flexDirection:'row'}}>
-                    <TouchableOpacity style={styles.buttonClose}>
-                        <Text>Cancel</Text>
+                <Text style={{fontSize:30,fontWeight:'bold'}}>
+                  Insert Bike
+                </Text>
+                <View style={{marginVertical:10}}>
+                  <TextInput style={styles.input} placeholder='BikeName'/>
+                  <TextInput style={styles.input} placeholder='BikePrice'/>
+                  <TextInput style={styles.input} placeholder='Bike Image' />
+                </View>  
+                <View style={{width:150,flexDirection:'row',justifyContent:'space-between'}}>
+                    <TouchableOpacity onPress={props.modalClose} style={[styles.buttonClose,styles.button]}>
+                        <Text style={styles.modalText}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonOpen}>
-                        <Text>Insert</Text>
+                    <TouchableOpacity style={[styles.buttonOpen,styles.button]}>
+                        <Text style={styles.modalText}>Insert</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -71,4 +76,12 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
   },
+  input:{
+    width:200,
+    height:35,
+    borderBottomColor:'#ccc',
+    borderBottomWidth:1,
+    marginVertical:15,
+    fontSize:22
+}
 });

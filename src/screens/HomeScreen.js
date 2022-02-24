@@ -16,7 +16,7 @@ export default function HomeScreen({navigation}){
     }
     const goBikeRent = ()=>{
         navigation.navigate('Bike Rent')
-        hideModal()
+        setIsModalVisible(false)
     }
     return <ImageBackground style={{width:'100%',height:'100%'}} source={{uri:img}}>
             <View style={styles.layoutOne}>

@@ -7,7 +7,7 @@ export default function(state = [],action){
             return [...state,action.payload]
         }
         case(LOAD_BIKE):{
-            return action.payload
+            return action.data
         }
         default:
             return state;

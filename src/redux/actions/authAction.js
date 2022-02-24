@@ -16,18 +16,12 @@ export const registerUser = (userData) => dispatch =>{
     }))
 
 }
-export const loginUser = userData => dispatch =>{
-    axios
-    .post('http://localhost:3001/bikeRent/loginUser', userData)
-    .then(res =>{
-        const {token} = res.data;
-        localStorage.setItem('jwtToken',token);
-        const decoded = jwt_decode(token);
-    })
-    .catch(err =>dispatch({
-        type:GET_ERRORS,
-        payload:err.response.data
-    }))
+export const loginUser = userData =>{
+    return async(dispatch)=>{
+        const {data} =  await axios.post('http://192.168.1.3:3001/bikeRent/loginUser', userData)
+        console.log(data);
+        
+    }
 }
 export const setCurrentUser = decoded =>{
     return {
