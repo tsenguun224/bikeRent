@@ -17,9 +17,14 @@ export const registerUser = (userData) => dispatch =>{
 
 }
 export const loginUser = userData =>{
-    return async(dispatch)=>{
-        const {data} =  await axios.post('http://192.168.1.3:3001/bikeRent/loginUser', userData)
-        console.log(data);
+    return (dispatch)=>{
+        axios.post('http://192.168.1.7:3001/bikeRent/loginUser', userData).then(res=>{
+            console.log(res)
+            console.log(res.data)
+        }).catch(err =>{
+            console.log(err)
+        })
+        
         
     }
 }

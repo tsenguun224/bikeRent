@@ -1,8 +1,8 @@
 import {View,Text,StyleSheet,TextInput,TouchableOpacity,FlatList,ActivityIndicator,ImageBackground} from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import MyGradientButton from '../components/MyGradientButton';
-import BikeInserModal from '../components/BikeInserModal';
-import {addBike,loadBike} from '../redux/actions/bikeActions'
+import BikeInsertModal from '../components/BikeInsertModal'
+import {loadBike} from '../redux/actions/bikeActions'
 import { useState,useEffect } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 
@@ -45,12 +45,12 @@ export default function BikeRentScreen() {
                 <MyGradientButton textColor="#fff" width='45%' title='Popular' color1='#7F00FF' color2='#E100FF'/>
                 <MyGradientButton borderColor='#ccc' borderWidth={1} textColor='#000' width="45%" title='All' color1='#fff' color2="#fff"/>
             </View>
-            <BikeInserModal modalClose={closeModal} modalVisible={modalVisible}/>
+            <BikeInsertModal modalClose={closeModal} modalVisible={modalVisible}/>
         </View>
         <View style={styles.layoutTwo}>
             {
                 bikes.bikes ? (<FlatList keyExtractor={item => item._id} data={bikes.bikes} renderItem={({item})=>(
-                    <TouchableOpacity style={[{width:'100%',height:150,backgroundColor:'black',flex:1,alignItems:'center',justifyContent:'center'}]}>
+                    <TouchableOpacity style={[{width:'100%',height:150,backgroundColor:'black',flex:1,alignItems:'center',justifyContent:'center',marginTop:10}]}>
                         <ImageBackground style={{width:'100%',height:'100%',alignItems:'center',justifyContent:'center'}} source={{uri:item.bikeImg}}>
                             <Text style={{color:'white'}}>{item.bikeName}</Text>
                         </ImageBackground>

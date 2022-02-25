@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, View,TextInput,TouchableOpacity } from 'react-native';
+import {useSelector,useDispatch} from 'react-redux';
+import {addBike} from '../redux/actions/bikeActions';
 
 
-export default BikeInsertModal = (props) => {
-  
+
+
+
+
+
+export default function BikeInsertModal(props) {
+  const dispatch = useDispatch();
+  const insertBike = ()=>{
+    
+  }
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -11,13 +21,14 @@ export default BikeInsertModal = (props) => {
         transparent={true}
         visible={props.modalVisible}
        >
+         <View style={styles.centeredView}>
             <View style={styles.modalView}>
                 <Text style={{fontSize:30,fontWeight:'bold'}}>
                   Insert Bike
                 </Text>
                 <View style={{marginVertical:10}}>
-                  <TextInput style={styles.input} placeholder='BikeName'/>
-                  <TextInput style={styles.input} placeholder='BikePrice'/>
+                  <TextInput style={styles.input} placeholder='Bike Name'/>
+                  <TextInput style={styles.input} placeholder='Bike Price'/>
                   <TextInput style={styles.input} placeholder='Bike Image' />
                 </View>  
                 <View style={{width:150,flexDirection:'row',justifyContent:'space-between'}}>
@@ -29,6 +40,7 @@ export default BikeInsertModal = (props) => {
                     </TouchableOpacity>
                 </View>
             </View>
+          </View>  
         </Modal>
     </View>
   );
@@ -77,11 +89,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input:{
-    width:200,
-    height:35,
+    width:270,
+    height:55,
     borderBottomColor:'#ccc',
     borderBottomWidth:1,
-    marginVertical:15,
+    marginVertical:20,
     fontSize:22
 }
 });

@@ -15,13 +15,12 @@ export default function LoginRegisterModal(props){
   const [regPassword, setRegPassword] = useState();
   const dispatch = useDispatch();
   const users = useSelector(state => state)
-  const toLogin = async () =>{
+  const toLogin = () =>{
     const loginUserData  = {
       email:loginEmail,
       password:loginPass
     }
-    const {data} = await axios({method:'POST',url:'http://localhost:3001/bikeRent/loginUser',data:loginUserData,headers:{"Content-Type":'application/json'}})
-    console.log(data)    
+    const data = axios.post('http://localhost:3001/login',loginUserData).then(res => res.json(res))
   }
   const toRegister = () =>{
     const userData = {
@@ -44,7 +43,6 @@ export default function LoginRegisterModal(props){
                     <View style={styles.modalView}>
                       <View style={{flexDirection:'row',justifyContent:'space-between',width:200,marginVertical:15}}>
                           <Text style={{fontSize:28}}>Login</Text>
-                          
                       </View>
                       <TextInput onChange={e => setLoginEmail(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
                       <TextInput onChange={e => setLoginPass(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Password'/>
