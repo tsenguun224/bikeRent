@@ -1,8 +1,29 @@
-const express = require('express');
-const router = express.Router();
-const userController = require('../controllers/users')
+const express = require("express");
+const { protect, authorize } = require("../middleware/protect");
 
-router.post('/bikeRent/registerUser', userController.registerUser)
-router.post('/login', userController.loginUser)
+const {
+  register,
+  login,
+  forgotPassword,
+  resetPassword,
+  logout,
+} = require("../controller/users");
+
+
+
+const router = express.Router();
+
+//"/api/v1/users"
+router.route("/register").post(register);
+router.route("/login").post(login);
+router.route("/logout").get(logout);
+router.route("/forgot-password").post(forgotPassword);
+router.route("/reset-password").post(resetPassword);
+
+router.use(protect);
+
+
+
+
 
 module.exports = router;

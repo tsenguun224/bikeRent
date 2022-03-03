@@ -1,18 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, View,TextInput,TouchableOpacity } from 'react-native';
-import {useSelector,useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {addBike} from '../redux/actions/bikeActions';
-
-
-
-
-
+import jwtdecode from 'jwt-decode';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function BikeInsertModal(props) {
   const dispatch = useDispatch();
+  const [bikeName,setBikeName] = useState();
+  const [bikeImage,setBikeImage] = useState();
+  const [bikePrice, setBikePrice] = useState();
+  const [bikeEzen, setBikeEzen] = useState();
+  useEffect(async()=>{
+    const token = await AsyncStorage.getItem("user_token")
+    const decode = jwtdecode(token)
+    setBikeEzen(decode.id);
+  },[bikeEzen])
   const insertBike = ()=>{
-    
+
+    const bikeData = {
+      bikeName:bikeName,
+      bikeImage:bikeImage,
+      bikePrice:bikePrice,
+      bikeEzen:bikeEzen
+    }
+    dispatch(addBike(bikeData));
+    props.modalClose()
+    clearInput()
+  }
+  const clearInput = ()=>{
+    setBikeName('')
+    setBikeEzen('')
+    setBikeImage('')
+    setBikePrice('')
   }
   return (
     <View style={styles.centeredView}>
@@ -27,15 +48,15 @@ export default function BikeInsertModal(props) {
                   Insert Bike
                 </Text>
                 <View style={{marginVertical:10}}>
-                  <TextInput style={styles.input} placeholder='Bike Name'/>
-                  <TextInput style={styles.input} placeholder='Bike Price'/>
-                  <TextInput style={styles.input} placeholder='Bike Image' />
+                  <TextInput value={bikeName} onChangeText={setBikeName} style={styles.input} placeholder='Bike Name'/>
+                  <TextInput value={bikePrice}onChangeText={setBikePrice} style={styles.input} placeholder='Bike Price'/>
+                  <TextInput value={bikePrice}onChangeText={setBikeImage} style={styles.input} placeholder='Bike Image' />
                 </View>  
                 <View style={{width:150,flexDirection:'row',justifyContent:'space-between'}}>
                     <TouchableOpacity onPress={props.modalClose} style={[styles.buttonClose,styles.button]}>
                         <Text style={styles.modalText}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.buttonOpen,styles.button]}>
+                    <TouchableOpacity onPress={insertBike} style={[styles.buttonOpen,styles.button]}>
                         <Text style={styles.modalText}>Insert</Text>
                     </TouchableOpacity>
                 </View>

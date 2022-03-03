@@ -1,35 +1,62 @@
-import {View,Modal,Text,TouchableOpacity,StyleSheet,TextInput} from 'react-native'
-import { useState } from 'react';
+import {View,Modal,Text,TouchableOpacity,StyleSheet,TextInput,Alert} from 'react-native';
+import { useState,useEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
-import { loginUser,registerUser } from '../redux/actions/authAction';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-export default function LoginRegisterModal(props){
+
+
+export default function LoginRegisterModal(props,{navigation}){
   const [isLogin,setLogin]= useState(false)
-  const [loginEmail,setLoginEmail] = useState();
-  const [loginPass,setLoginPass] = useState();
+  const [email,setEmail] = useState();
+  const [password,setPassword] = useState();
   const [regEmail,setRegEmail] = useState();
   const [regName, setRegName] = useState() ;
   const [regPassword, setRegPassword] = useState();
+
+  useEffect(()=>{
+    if(AsyncStorage.token){
+      props.goBike()
+    }
+  },[])
   const dispatch = useDispatch();
   const users = useSelector(state => state)
   const toLogin = () =>{
-    const loginUserData  = {
-      email:loginEmail,
-      password:loginPass
-    }
-    const data = axios.post('http://localhost:3001/login',loginUserData).then(res => res.json(res))
+    const url = 'http://192.168.1.3:8000/api/v1/users/login';
+    
+    axios.post(url,{
+      email:email,
+      password:password
+    }).then(result => {
+      
+        AsyncStorage.setItem('user_token',result.data.token)
+        .then(result =>{
+
+          console.log('Successfull login saved your token')
+          props.goBike()
+        }
+          
+        ).catch(err=>{
+          console.log(err)
+        })
+        
+      
+    })
+    .catch(err =>{
+      console.log(err.response);
+    })
+ 
   }
-  const toRegister = () =>{
+  const toRegister = async () =>{
     const userData = {
       email:regEmail,
       name:regName,
       password:regPassword
     }
-    dispatch(registerUser(userData));
-
+    const {data} = await axios.post('http://192.168.1.3:8000/bikeRent/registerUser',userData)
+    Alert.alert("Message",data.message,[{text:'OK'}])
   }
   return (
     <View style={styles.centeredView}>
@@ -44,8 +71,22 @@ export default function LoginRegisterModal(props){
                       <View style={{flexDirection:'row',justifyContent:'space-between',width:200,marginVertical:15}}>
                           <Text style={{fontSize:28}}>Login</Text>
                       </View>
-                      <TextInput onChange={e => setLoginEmail(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
-                      <TextInput onChange={e => setLoginPass(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Password'/>
+                      <View>
+                        <TextInput
+                            value={email}
+                            keyboardType="email-address"
+                            placeholder="Та имэйл хаягаа оруулна уу"
+                            onChangeText={setEmail}
+                            style={styles.input}
+                        />
+                        <TextInput 
+                          value={password}
+                          secureTextEntry={true}
+                          placeholder="Нууц үгээ оруулна уу"
+                          onChangeText={setPassword}
+                          style={styles.input}
+                        />
+                      </View>  
                       <View style={{flexDirection:'row',justifyContent:'space-evenly',width:'100%',marginVertical:10}}>
                           <TouchableOpacity
                           style={[styles.button, styles.buttonClose]}
@@ -80,9 +121,9 @@ export default function LoginRegisterModal(props){
                     <Text style={{color:'blue'}}>Login</Text>
                 </TouchableOpacity>
             </View>
-            <TextInput onChange={e => setRegEmail(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
-            <TextInput onChange={e => setRegName(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Name'/>
-            <TextInput onChange={e => setRegPassword(e.target.value)} style={styles.input} placeholderTextColor="#ccc" placeholder='Password'/>
+            <TextInput onChangeText={regEmail} style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
+            <TextInput onChangeText={regName} style={styles.input} placeholderTextColor="#ccc" placeholder='Name'/>
+            <TextInput onChangeText={regPassword} style={styles.input} placeholderTextColor="#ccc" placeholder='Password' secureTextEntry/>
             <View style={{flexDirection:'row',justifyContent:'space-evenly',width:'100%',marginVertical:10}}>
                 <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}
@@ -90,7 +131,7 @@ export default function LoginRegisterModal(props){
                 >
                 <Text style={styles.textStyle}>Cancel</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.buttonOpen,styles.button]}>
+                <TouchableOpacity onPress={toRegister} style={[styles.buttonOpen,styles.button]}>
                     <Text>Register</Text>
                 </TouchableOpacity>
             </View>
@@ -130,7 +171,7 @@ const styles = StyleSheet.create({
         elevation: 2,
       },
       buttonOpen: {
-        backgroundColor: '#F194FF',
+        backgroundColor: '',
       },
       buttonClose: {
         backgroundColor: '#ccc',
