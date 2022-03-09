@@ -5,6 +5,10 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function BikeDetailScreen({route}){
     const [currentBike,setCurrenBike] = useState();
+    const [timer,setTimer] = useState(24);
+    const calculateTime = ()=>{
+        
+    }
     const bike = route.params;
     return (
         <View>
@@ -22,7 +26,7 @@ export default function BikeDetailScreen({route}){
                             <Text style={{color:'#000',fontSize:22,marginVertical:10}}>{bike.bike.bikeName}</Text>
                             <Text style={{color:'#000',fontSize:22}}>24H-{bike.bike.bikePrice}₮</Text>
                             <TouchableOpacity style={styles.button}>
-                                <Text style={{textAlign:'center'}}>check out</Text>
+                                <Text style={{textAlign:'center'}}>rent bike</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

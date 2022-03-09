@@ -53,7 +53,7 @@ export default function BikeRentScreen({navigation}) {
                 bikes.bikes ? (<FlatList showsVerticalScrollIndicator={false} keyExtractor={item => item._id} data={bikes.bikes} renderItem={({item})=>(
                     <TouchableOpacity onPress={() => navigation.navigate('Rent',{bike:item})} style={[{width:'100%',height:150,backgroundColor:'black',flex:1,alignItems:'center',justifyContent:'center',marginTop:10}]}>
                         <ImageBackground style={{width:'100%',height:'100%',alignItems:'center',justifyContent:'center'}} source={{uri:item.bikeImage}}>
-                            <Text style={{color:'#64748b',fontSize:24}}>{item.bikeName}</Text>
+                            
                         </ImageBackground>
                     </TouchableOpacity>
                 )}/>):<ActivityIndicator/>

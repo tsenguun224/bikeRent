@@ -20,13 +20,15 @@ class userMoneyController {
         }
     }
     async rentBike(req,res){
-        const id = req.body;
+        const bikeId = req.body;
+        const userMoneyId = req.body;
         try{
 
-            const Bike = await Bike.findOne({id:id})
-            const 
-        }catch(err){
+            const Bike = await Bike.findOne({id:bikeId})
+            const moneyForUser = await userMoney.findOne({user:userMoneyId})
             
+        }catch(err){
+            console.log(err);
         }
     }
 }
