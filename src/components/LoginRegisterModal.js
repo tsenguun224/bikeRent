@@ -24,7 +24,7 @@ export default function LoginRegisterModal(props,{navigation}){
   const dispatch = useDispatch();
   const users = useSelector(state => state)
   const toLogin = () =>{
-    const url = 'http://192.168.1.3:8000/api/v1/users/login';
+    const url = 'http://192.168.1.2:8000/api/v1/users/login';
     
     axios.post(url,{
       email:email,
@@ -35,6 +35,7 @@ export default function LoginRegisterModal(props,{navigation}){
         .then(result =>{
 
           console.log('Successfull login saved your token')
+          resetForm()
           props.goBike()
         }
           
@@ -49,14 +50,22 @@ export default function LoginRegisterModal(props,{navigation}){
     })
  
   }
+  const resetForm = ()=>{
+    setEmail('')
+    setPassword('')
+    setRegEmail('')
+    setRegName('')
+    setRegPassword('')
+  }
   const toRegister = async () =>{
     const userData = {
       email:regEmail,
       name:regName,
       password:regPassword
     }
-    const {data} = await axios.post('http://192.168.1.3:8000/bikeRent/registerUser',userData)
-    Alert.alert("Message",data.message,[{text:'OK'}])
+    const {data} = await axios.post('http://192.168.1.2:8000/api/v1/users/register',userData)
+    Alert.alert("Message","Successful",[{text:'OK'}])
+    resetForm()
   }
   return (
     <View style={styles.centeredView}>
@@ -121,9 +130,9 @@ export default function LoginRegisterModal(props,{navigation}){
                     <Text style={{color:'blue'}}>Login</Text>
                 </TouchableOpacity>
             </View>
-            <TextInput onChangeText={regEmail} style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
-            <TextInput onChangeText={regName} style={styles.input} placeholderTextColor="#ccc" placeholder='Name'/>
-            <TextInput onChangeText={regPassword} style={styles.input} placeholderTextColor="#ccc" placeholder='Password' secureTextEntry/>
+            <TextInput value={regEmail} onChangeText={setRegEmail} style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
+            <TextInput value={regName} onChangeText={setRegName} style={styles.input} placeholderTextColor="#ccc" placeholder='Name'/>
+            <TextInput value={regPassword} onChangeText={setRegPassword} style={styles.input} placeholderTextColor="#ccc" placeholder='Password' secureTextEntry/>
             <View style={{flexDirection:'row',justifyContent:'space-evenly',width:'100%',marginVertical:10}}>
                 <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}

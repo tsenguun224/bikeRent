@@ -5,8 +5,7 @@ import BikeInsertModal from '../components/BikeInsertModal'
 import {loadBike} from '../redux/actions/bikeActions'
 import { useState,useEffect } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
-
-
+import { AntDesign } from '@expo/vector-icons';
 
 
 
@@ -61,10 +60,10 @@ export default function BikeRentScreen({navigation}) {
         </View>
         <View style={styles.layoutThree}>
             <TouchableOpacity>
-                <Text>Home</Text>
+                <AntDesign name="home" size={24} color="black" />
             </TouchableOpacity>
-            <TouchableOpacity>
-                <Text>User</Text>
+            <TouchableOpacity onPress={()=>navigation.navigate('User')}>
+                <AntDesign name="user" size={24} color="black" />
             </TouchableOpacity>
         </View>
     </View>
