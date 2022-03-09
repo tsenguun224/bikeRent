@@ -1,13 +1,17 @@
 import { useEffect,useState } from 'react';
 import {View,Text,TouchableOpacity,TextInput,StyleSheet,ImageBackground,ActivityIndicator} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Timer from '../components/RentTime';
 
 
 export default function BikeDetailScreen({route}){
     const [currentBike,setCurrenBike] = useState();
     const [timer,setTimer] = useState(24);
-    const calculateTime = ()=>{
-        
+    const [isPressed,setIsPressed] = useState(false)
+    const bikeRent = ()=>{
+        setIsPressed(true)
+    }
+    const bikeRentCost = ()=>{
+        setIsPressed(false)
     }
     const bike = route.params;
     return (
@@ -22,13 +26,23 @@ export default function BikeDetailScreen({route}){
                         </View>
                     </View>
                     <View style={{flex:2,justifyContent:'center',alignItems:'center'}}>
-                        <View style={styles.textDetail}>
-                            <Text style={{color:'#000',fontSize:22,marginVertical:10}}>{bike.bike.bikeName}</Text>
-                            <Text style={{color:'#000',fontSize:22}}>24H-{bike.bike.bikePrice}₮</Text>
-                            <TouchableOpacity style={styles.button}>
-                                <Text style={{textAlign:'center'}}>rent bike</Text>
-                            </TouchableOpacity>
-                        </View>
+                        {
+                            isPressed !== true ? (
+                                <View style={styles.textDetail}>
+                                    <Text style={{color:'#000',fontSize:22,marginVertical:10}}>{bike.bike.bikeName}</Text>
+                                    <Text style={{color:'#000',fontSize:22}}>24H-{bike.bike.bikePrice}₮</Text>
+                                    <TouchableOpacity onPress={bikeRent} style={styles.button}>
+                                        <Text style={{textAlign:'center'}}>rent bike</Text>
+                                     </TouchableOpacity>
+                                </View>
+                            ) : (
+                                <View style={styles.rentHour}>
+                                    <Timer pressed={isPressed} bikeRentCost={bikeRentCost}/>
+                                </View>
+                            )
+                        }
+                        
+                        
                     </View>
                 </View>
             </ImageBackground>
@@ -73,5 +87,13 @@ const styles = StyleSheet.create({
         borderRadius:12,
         backgroundColor:"#f5f5f4",
         alignItems:'center'
+    },
+    rentHour:{
+        width:250,
+        height:200,
+        borderRadius:12,
+        backgroundColor:"#f5f5f4",
+        alignItems:'center',
+        justifyContent:'center'
     }
 })

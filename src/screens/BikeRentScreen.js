@@ -59,19 +59,33 @@ export default function BikeRentScreen({navigation}) {
                 )}/>):<ActivityIndicator/>
             }
         </View>
-        
+        <View style={styles.layoutThree}>
+            <TouchableOpacity>
+                <Text>Home</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>User</Text>
+            </TouchableOpacity>
+        </View>
     </View>
 }
 const styles = StyleSheet.create({
     layoutOne:{
-        flex:1,
+        flex:3,
         marginHorizontal:20,
     },
     layoutTwo:{
-        flex:2,
+        flex:6,
         marginHorizontal:20,
         justifyContent:'center',
         marginTop:60,
+    },
+    layoutThree:{
+        flex:1,
+        marginHorizontal:20,
+        marginTop:15,
+        flexDirection:'row',
+        justifyContent:'space-evenly'
     },
     logo:{
         width:30,
