@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const paginate = require("../utils/paginate");
 const sendEmail = require("../utils/email");
 const crypto = require('crypto');
+const { use } = require('../routes/users');
 
 // register
 exports.register = asyncHandler(async (req, res, next) => {
@@ -209,3 +210,30 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     user: user,
   });
 });
+
+exports.manageBalance = asyncHandler(async (req,res,next) =>{
+  const {transaction} = req.body;
+  const {email} = req.body
+  const user = await User.findOne({email});
+
+  if(user){
+
+    if(transaction.type === 'exp'){
+  
+      const updatedBal = await User.findByIdAndUpdate(user._id,{balance:user.balance - transaction.value})
+      res.json({
+        updatedBal:updatedBal
+      })
+    }else{
+      const updatedBal = await User.findByIdAndUpdate(user._id,{balance:user.balance + transaction.value})
+      res.json({
+        updatedBal:updatedBal
+      })
+    }
+  }
+
+   
+
+  
+    
+})

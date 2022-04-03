@@ -2,11 +2,14 @@ import React from 'react'
 import {  Text,  SafeAreaView,Alert } from 'react-native'
 
 export default class Timer extends React.Component {
-
-    state = {
-        timer: null,
-        counter: 24,
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            timer: null,
+            counter: 24,
+        };
+    }
+    
 
     startTimer = () => {
 
@@ -20,7 +23,7 @@ export default class Timer extends React.Component {
         var states = this.state
 
         if (states.counter === 0) {
-            Alert.alert("Rent time is over","Please check out your bill",[{text:'Check out',onPress:()=>this.props.bikeRentCost}])
+            Alert.alert("Rent time is over","Please check out your bill",[{text:'Check out', onPress:() => this.props.bikeRentCost()}])
             clearInterval(this.state.timer)
             this.setState({
                 counter: 24

@@ -1,4 +1,4 @@
-import {View,Text,StyleSheet,TextInput,TouchableOpacity,FlatList,ActivityIndicator,ImageBackground} from 'react-native'
+import {View,Text,StyleSheet,TextInput,TouchableOpacity,FlatList,ActivityIndicator,ImageBackground,BackHandler,Alert} from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import MyGradientButton from '../components/MyGradientButton';
 import BikeInsertModal from '../components/BikeInsertModal'
@@ -20,11 +20,27 @@ export default function BikeRentScreen({navigation}) {
     const bikes = useSelector(state => {return state.bikes})
     const dispatch = useDispatch();
     
+
+    useEffect(()=>{
+        const backAction = () => {
+          Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+            {
+              text: 'Cancel',
+              onPress: () => null,
+              style: 'cancel',
+            },
+            { text: 'YES', onPress: () => BackHandler.exitApp() },
+          ]);
+          return true;
+        };
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+        return () => backHandler.remove()
+      },[])
     
     useEffect(async ()=>{
         dispatch(loadBike())
     },[modalVisible])
-  
+    
     
     return <View style={{flex:1}}>
         <View style={styles.layoutOne}>
@@ -59,10 +75,10 @@ export default function BikeRentScreen({navigation}) {
             }
         </View>
         <View style={styles.layoutThree}>
-            <TouchableOpacity>
+            <TouchableOpacity style={{borderBottomWidth:5,padding:20}}>
                 <AntDesign name="home" size={24} color="black" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>navigation.navigate('User')}>
+            <TouchableOpacity style={{borderRadius:28,padding:20}} onPress={()=>navigation.navigate('User')}>
                 <AntDesign name="user" size={24} color="black" />
             </TouchableOpacity>
         </View>
@@ -83,6 +99,8 @@ const styles = StyleSheet.create({
         flex:1,
         marginHorizontal:20,
         marginTop:15,
+        marginBottom:5
+        ,
         flexDirection:'row',
         justifyContent:'space-evenly'
     },

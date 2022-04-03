@@ -19,7 +19,7 @@ const connectDB = require('./config/db')
 
 const usersRoutes = require("./routes/users");
 const bikesRoutes = require('./routes/bikes')
-const userMoneyRoutes = require('./routes/userMoney')
+
 
 dotenv.config({path:'./config/config.env'})
 
@@ -68,7 +68,7 @@ app.use(helmet());
 app.use(xss());
 app.use('/api/v1/users',usersRoutes);
 app.use(bikesRoutes)
-app.use(userMoneyRoutes)
+
 
 
 const server = app.listen(

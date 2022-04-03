@@ -29,6 +29,11 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  balance:{
+    type:Number,
+    required:true,
+    default:0
+  }
 });
 
 UserSchema.pre("save", async function (next) {
@@ -73,5 +78,6 @@ UserSchema.methods.generatePasswordChangeToken = function () {
 
   return resetToken;
 };
+
 
 module.exports = mongoose.model("User", UserSchema);

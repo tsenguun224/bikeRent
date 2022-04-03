@@ -16,15 +16,10 @@ export default function LoginRegisterModal(props,{navigation}){
   const [regName, setRegName] = useState() ;
   const [regPassword, setRegPassword] = useState();
 
-  useEffect(()=>{
-    if(AsyncStorage.token){
-      props.goBike()
-    }
-  },[])
   const dispatch = useDispatch();
   const users = useSelector(state => state)
   const toLogin = () =>{
-    const url = 'http://192.168.1.2:8000/api/v1/users/login';
+    const url = 'http://192.168.1.5:8000/api/v1/users/login';
     
     axios.post(url,{
       email:email,
@@ -63,7 +58,7 @@ export default function LoginRegisterModal(props,{navigation}){
       name:regName,
       password:regPassword
     }
-    const {data} = await axios.post('http://192.168.1.2:8000/api/v1/users/register',userData)
+    const {data} = await axios.post('http://192.168.1.5:8000/api/v1/users/register',userData)
     Alert.alert("Message","Successful",[{text:'OK'}])
     resetForm()
   }
@@ -130,9 +125,9 @@ export default function LoginRegisterModal(props,{navigation}){
                     <Text style={{color:'blue'}}>Login</Text>
                 </TouchableOpacity>
             </View>
-            <TextInput value={regEmail} onChangeText={setRegEmail} style={styles.input} placeholderTextColor="#ccc" placeholder='Email'/>
-            <TextInput value={regName} onChangeText={setRegName} style={styles.input} placeholderTextColor="#ccc" placeholder='Name'/>
-            <TextInput value={regPassword} onChangeText={setRegPassword} style={styles.input} placeholderTextColor="#ccc" placeholder='Password' secureTextEntry/>
+            <TextInput value={regEmail} onChangeText={setRegEmail} style={styles.input} placeholderTextColor="#ccc" placeholder='Емайл хаяг'/>
+            <TextInput value={regName} onChangeText={setRegName} style={styles.input} placeholderTextColor="#ccc" placeholder='Бүтэн нэр'/>
+            <TextInput value={regPassword} onChangeText={setRegPassword} style={styles.input} placeholderTextColor="#ccc" placeholder='Нууц үг' secureTextEntry/>
             <View style={{flexDirection:'row',justifyContent:'space-evenly',width:'100%',marginVertical:10}}>
                 <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}

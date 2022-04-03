@@ -8,6 +8,9 @@ const {
   resetPassword,
   logout,
   getUser,
+  getUsers,
+  manageBalance,
+  getBalance
 } = require("../controller/users");
 
 
@@ -21,6 +24,9 @@ router.route("/logout").get(logout);
 router.route("/forgot-password").post(forgotPassword);
 router.route("/reset-password").post(resetPassword);
 router.route("/getUser/:id").post(getUser)
+router.route('/getUsers').get(getUsers)
+router.route('/balance').post(manageBalance)
+
 router.use(protect);
 
 
