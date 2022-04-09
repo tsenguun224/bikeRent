@@ -24,14 +24,14 @@ export default function UserProfiles({navigation}){
         setUserId(decode.id)
         if(userId === decode.id){
             const getUser = async()=>{
-                const {data} = await axios.post('http://192.168.1.5:8000/api/v1/users/getUser/' + userId)
+                const {data} = await axios.post('http://172.20.10.5:8000/api/v1/users/getUser/' + userId)
                 setUser(data.data)
             }
             getUser() 
         }  
     },[userId,user])
     const userLogout = async()=>{
-        const {data} = await axios.get('http://192.168.1.5:8000/api/v1/users/logout')
+        const {data} = await axios.get('http://172.20.10.5:8000/api/v1/users/logout')
         if(data.success === true){
             navigation.navigate('Home')
            AsyncStorage.removeItem('user_token').then(result => {
@@ -75,8 +75,8 @@ export default function UserProfiles({navigation}){
                             <Text style={{fontSize:34,marginVertical:10}}>{user.balance}₮</Text>
                         ):<ActivityIndicator/>
                     }
-                    <TouchableOpacity style={{marginVertical:10,width:120,height:50,backgroundColor:"red",borderRadius:24,justifyContent:'center',alignItems:'center'}}>
-                        <Text onPress={modalOpen} style={{fontSize:18,color:'#fff'}}>Insert Money</Text>
+                    <TouchableOpacity onPress={modalOpen} style={{marginVertical:10,width:120,height:50,backgroundColor:"red",borderRadius:24,justifyContent:'center',alignItems:'center'}}>
+                        <Text  style={{fontSize:18,color:'#fff'}}>Insert Money</Text>
                     </TouchableOpacity>
                     
                 </View>

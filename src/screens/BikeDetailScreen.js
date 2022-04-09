@@ -1,5 +1,5 @@
 import { useEffect,useState } from 'react';
-import {View,Text,TouchableOpacity,TextInput,StyleSheet,ImageBackground,ActivityIndicator} from 'react-native';
+import {View,Text,TouchableOpacity,TextInput,StyleSheet,ImageBackground,ActivityIndicator, Alert} from 'react-native';
 import Timer from '../components/RentTime';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
@@ -10,36 +10,45 @@ export default function BikeDetailScreen({route,navigation},props){
     const [timer,setTimer] = useState(24);
     const [isPressed,setIsPressed] = useState(false)
     const [user,setUser] = useState()
-    useEffect(async ()=>{
+    useEffect(async()=>{
         const token = await AsyncStorage.getItem('user_token')
         const decode = jwtDecode(token)
         
         const getUser = async()=>{
-        const {data} = await axios.post('http://192.168.1.5:8000/api/v1/users/getUser/' + decode.id)
+        const {data} = await axios.post('http://172.20.10.5:8000/api/v1/users/getUser/' + decode.id)
             setUser(data.data)
         }
         getUser() 
     },
-    [])
+    [user])
     const bikeRent = ()=>{
-        setIsPressed(true)
-        manageBalance()
-    }
+            if(user.balance === 0 || user.balance < parseInt(bike.bike.bikePrice)){
+                Alert.alert("Check your value","Please deposit",[{title:"ok",onPress:()=>{navigation.goBack()}}])
+            }else{
+                setIsPressed(true)
+                manageBalance() 
+            }
+        }
+
     const bikeRentCost = ()=>{
         setIsPressed(false)
         navigation.navigate('Bike Rent')
     }
     const manageBalance = async () => {
-        const {data} = await axios.post('http://192.168.1.5:8000/api/v1/users/balance',{
+
+        
+        
+            const {data} = await axios.post('http://172.20.10.5:8000/api/v1/users/balance',{
             email:user.email,
             transaction:{
                 type:'exp',
                 value:parseInt(bike.bike.bikePrice)
             }
         })
-        console.log(data)
+            
     }
     const bike = route.params;
+    console.log()
     return (
         <View>
             <ImageBackground style={{width:'100%',height:'100%'}} source={{uri:bike.bike.bikeImage}}>

@@ -9,7 +9,7 @@ export default function MoneyInsertModal(props) {
 const [moneyValue,setMoenyValue] = useState()
 const manageBalance = async () => {
     
-    const data = await axios.post('http://192.168.1.5:8000/api/v1/users/balance',{
+    const data = await axios.post('http://172.20.10.5:8000/api/v1/users/balance',{
         email:props.email,
         transaction:{
             type:'inc',

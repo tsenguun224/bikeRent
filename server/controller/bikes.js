@@ -2,12 +2,12 @@ const Bike = require('../models/bikes');
 
 class bikeController {
     async insertBike(req,res){
-        const { bikeName,bikeImage,bikePrice,bikeEzen } = req.body;
+        const { bikeName,bikeImage,bikePrice} = req.body;
         const newBike = await new Bike({
             bikeName:bikeName,
             bikeImage:bikeImage,
             bikePrice:bikePrice,
-            bikeEzen:bikeEzen
+            bikeEzen:req.userId
         })
         try{
             const result = await newBike.save()
@@ -22,9 +22,12 @@ class bikeController {
         }
     }
     async getBikes(req,res){
+        // const {userId} = req.query;
        try{
-        const bikes = await Bike.find()
+        const bikes = await Bike.find().lean().populate('bikeEzen', 'name')
+    
         if(bikes){
+            
             res.json({bikes:bikes})
         }else{
             res.json({message:"NoOne inserted bike"})

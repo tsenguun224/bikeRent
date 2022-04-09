@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const {ObjectId} = mongoose.Schema
+const ObjectId = mongoose.Types.ObjectId
 const bikeSchema = new mongoose.Schema({
     bikeName:{
         type:String,
@@ -15,8 +15,8 @@ const bikeSchema = new mongoose.Schema({
     },
     bikeEzen:{
         type:ObjectId,
-        required:true,
-        ref:"User"
+        ref:"User",
+        required: true
     }
 })
 module.exports = mongoose.model("bikes",bikeSchema)
