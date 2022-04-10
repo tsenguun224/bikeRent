@@ -4,6 +4,8 @@ import Timer from '../components/RentTime';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {url} from '../url'
+
 
 export default function BikeDetailScreen({route,navigation},props){
     const [currentBike,setCurrenBike] = useState();
@@ -15,7 +17,7 @@ export default function BikeDetailScreen({route,navigation},props){
         const decode = jwtDecode(token)
         
         const getUser = async()=>{
-        const {data} = await axios.post('http://172.20.10.5:8000/api/v1/users/getUser/' + decode.id)
+        const {data} = await axios.post(url + ':8000/api/v1/users/getUser/' + decode.id)
             setUser(data.data)
         }
         getUser() 
@@ -38,7 +40,7 @@ export default function BikeDetailScreen({route,navigation},props){
 
         
         
-            const {data} = await axios.post('http://172.20.10.5:8000/api/v1/users/balance',{
+            const {data} = await axios.post(url + ':8000/api/v1/users/balance',{
             email:user.email,
             transaction:{
                 type:'exp',

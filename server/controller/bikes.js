@@ -22,13 +22,15 @@ class bikeController {
         }
     }
     async getBikes(req,res){
-        // const {userId} = req.query;
+        
+        const search = req.query
+        
        try{
-        const bikes = await Bike.find().lean().populate('bikeEzen', 'name')
+        const bikes = await Bike.find(search).lean().populate('bikeEzen').exec()
     
         if(bikes){
             
-            res.json({bikes:bikes})
+            res.json({bikes})
         }else{
             res.json({message:"NoOne inserted bike"})
         }

@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwtDecode from 'jwt-decode';
 import { AntDesign } from '@expo/vector-icons';
 import MoneyInsertModal from '../components/MoneyInsertModal';
-
+import { url } from '../url';
 export default function UserProfiles({navigation}){
     const [userId,setUserId] = React.useState()
     const [user,setUser] = React.useState()
@@ -24,14 +24,15 @@ export default function UserProfiles({navigation}){
         setUserId(decode.id)
         if(userId === decode.id){
             const getUser = async()=>{
-                const {data} = await axios.post('http://172.20.10.5:8000/api/v1/users/getUser/' + userId)
+                const {data} = await axios.post(url + ':8000/api/v1/users/getUser/' + userId)
                 setUser(data.data)
             }
             getUser() 
         }  
-    },[userId,user])
+        return userId
+    },[userId])
     const userLogout = async()=>{
-        const {data} = await axios.get('http://172.20.10.5:8000/api/v1/users/logout')
+        const {data} = await axios.get(url + ':8000/api/v1/users/logout')
         if(data.success === true){
             navigation.navigate('Home')
            AsyncStorage.removeItem('user_token').then(result => {

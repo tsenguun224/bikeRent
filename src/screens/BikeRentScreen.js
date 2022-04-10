@@ -11,6 +11,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 export default function BikeRentScreen({navigation}) {
     const [modalVisible,setModalVisible] = useState(false);
+    const [searchField, setSearchField] = useState()
     const openInsertBikeModal = () => {
         setModalVisible(true)
     }
@@ -21,26 +22,17 @@ export default function BikeRentScreen({navigation}) {
     const dispatch = useDispatch();
     
 
-    useEffect(()=>{
-        const backAction = () => {
-          Alert.alert('Hold on!', 'Are you sure you want to go back?', [
-            {
-              text: 'Cancel',
-              onPress: () => null,
-              style: 'cancel',
-            },
-            { text: 'YES', onPress: () => BackHandler.exitApp() },
-          ]);
-          return true;
-        };
-        const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-        return () => backHandler.remove()
-      },[])
+    
     
     useEffect(async ()=>{
-        dispatch(loadBike())
+        
+        
     },[modalVisible])
     
+
+    const searchBike = ()=>{
+        dispatch(loadBike(searchField))
+    }
     
     return <View style={{flex:1}}>
         <View style={styles.layoutOne}>
@@ -52,8 +44,8 @@ export default function BikeRentScreen({navigation}) {
                 </TouchableOpacity>
             </View>
             <View style={styles.inputSection}>
-                <TextInput placeholder='Search' style={styles.input}/>
-                <TouchableOpacity> 
+                <TextInput value={searchField} onChangeText={setSearchField} placeholder='Search' style={styles.input}/>
+                <TouchableOpacity onPress={searchBike}> 
                     <Ionicons name="ios-search-sharp" size={32} color="black" />
                 </TouchableOpacity>
             </View>

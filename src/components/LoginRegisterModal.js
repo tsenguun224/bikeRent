@@ -3,7 +3,7 @@ import { useState,useEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {url} from '../url'
 
 
 
@@ -19,9 +19,9 @@ export default function LoginRegisterModal(props,{navigation}){
   const dispatch = useDispatch();
   const users = useSelector(state => state)
   const toLogin = () =>{
-    const url = 'http://172.20.10.5:8000/api/v1/users/login';
+    const urle = url  + ':8000/api/v1/users/login'
     
-    axios.post(url,{
+    axios.post(urle,{
       email:email,
       password:password
     }).then(result => {
@@ -58,7 +58,7 @@ export default function LoginRegisterModal(props,{navigation}){
       name:regName,
       password:regPassword
     }
-    const {data} = await axios.post('http://172.20.10.5:8000/api/v1/users/register',userData)
+    const {data} = await axios.post(url  + ':8000/api/v1/users/register',userData)
     Alert.alert("Message","Successful",[{text:'OK'}])
     resetForm()
   }
