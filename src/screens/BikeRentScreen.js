@@ -31,7 +31,7 @@ export default function BikeRentScreen({ navigation }) {
 		return state.bikes;
 	});
 	const dispatch = useDispatch();
-
+	
 	useEffect(async () => {
 		dispatch(loadBike(""));
 	}, [modalVisible]);

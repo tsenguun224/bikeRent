@@ -25,7 +25,7 @@ export default function BikeDetailScreen({ route, navigation }, props) {
 	useEffect(async () => {
 		const token = await AsyncStorage.getItem("user_token");
 		const decode = jwtDecode(token);
-
+		
 		const getUser = async () => {
 			const { data } = await axios.post(url + ":8000/api/v1/users/getUser/" + decode.id);
 			setUser(data.data);
@@ -56,7 +56,7 @@ export default function BikeDetailScreen({ route, navigation }, props) {
 			Alert.alert("Unsuccessful", "It is your own bicycle", [
 				{
 					title: "ok",
-					onPress: () => {
+				    onPress: () => {
 						navigation.goBack();
 					}
 				}
@@ -73,7 +73,11 @@ export default function BikeDetailScreen({ route, navigation }, props) {
 		}
 	};
 	const bike = route.params;
-	console.log();
+	const bikeLike = async ()=>{
+		
+		const {data} = await axios.post(url+":8000/bikeRent/like",{bikeName:bike.bike.bikeName})
+		setLike(true)
+	}
 	return (
 		<View>
 			<ImageBackground
@@ -95,9 +99,7 @@ export default function BikeDetailScreen({ route, navigation }, props) {
 							</View>
 						</View>
 						<TouchableOpacity
-							onPress={() => {
-								setLike(!like);
-							}}
+							onPress={bikeLike}
 							style={styles.likeButton}
 						>
 							{like === false ? (
