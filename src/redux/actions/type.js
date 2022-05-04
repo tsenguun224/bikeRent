@@ -4,3 +4,4 @@ export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 export const ADD_BIKE = 'ADD_BIKE';
 export const LOAD_BIKE = 'LOAD_BIKE';
+export const getOwnBike = 'GET_OWN'
