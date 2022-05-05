@@ -13,7 +13,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import MyGradientButton from "../components/MyGradientButton";
 import BikeInsertModal from "../components/BikeInsertModal";
-import { loadBike } from "../redux/actions/bikeActions";
+import { loadBike,getOwnBikes } from "../redux/actions/bikeActions";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
@@ -42,6 +42,9 @@ export default function BikeRentScreen({ navigation }) {
 	const getAllBike = () => {
 		dispatch(loadBike(""));
 	};
+	const getOwnBike = () =>{
+		dispatch(getOwnBikes())
+	}
 	return (
 		<View style={{ flex: 1 }}>
 			<View style={styles.layoutOne}>
@@ -70,9 +73,10 @@ export default function BikeRentScreen({ navigation }) {
 					<MyGradientButton
 						textColor="#fff"
 						width="45%"
-						title="Popular"
+						title="Your bikes"
 						color1="#7F00FF"
 						color2="#E100FF"
+						onPress={getOwnBike}
 					/>
 					<MyGradientButton
 						borderColor="#ccc"
