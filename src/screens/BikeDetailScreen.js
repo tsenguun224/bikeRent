@@ -21,7 +21,7 @@ export default function BikeDetailScreen({ route, navigation }, props) {
 	const [timer, setTimer] = useState(24);
 	const [isPressed, setIsPressed] = useState(false);
 	const [user, setUser] = useState();
-	const [like, setLike] = useState(false);
+	const [like, setLike] = useState(false)
 	useEffect(async () => {
 		const token = await AsyncStorage.getItem("user_token");
 		const decode = jwtDecode(token);
@@ -73,11 +73,7 @@ export default function BikeDetailScreen({ route, navigation }, props) {
 		}
 	};
 	const bike = route.params;
-	const bikeLike = async ()=>{
-		
-		const {data} = await axios.post(url+":8000/bikeRent/like",{bikeName:bike.bike.bikeName})
-		setLike(true)
-	}
+	
 	return (
 		<View>
 			<ImageBackground
@@ -99,7 +95,6 @@ export default function BikeDetailScreen({ route, navigation }, props) {
 							</View>
 						</View>
 						<TouchableOpacity
-							onPress={bikeLike}
 							style={styles.likeButton}
 						>
 							{like === false ? (
