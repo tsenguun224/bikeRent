@@ -110,9 +110,12 @@ export default function BikeDetailScreen({ route, navigation }, props) {
 								<Text style={{ color: "#000", fontSize: 22, marginVertical: 10 }}>
 									{bike.bike.bikeName}
 								</Text>
+								<Text style={{color: "#000", fontSize: 22, marginVertical: 10}}>
+									Contact:{(bike?.bike?.bikeEzen || {}).number }
+								</Text>
 								<Text style={{ color: "#000", fontSize: 22 }}>24H-{bike.bike.bikePrice}₮</Text>
 								<TouchableOpacity onPress={manageBalance} style={styles.button}>
-									<Text style={{ textAlign: "center" }}>rent bike</Text>
+									<Text style={{ textAlign: "center" }}>Check out</Text>
 								</TouchableOpacity>
 							</View>
 						) : (

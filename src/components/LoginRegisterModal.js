@@ -15,7 +15,7 @@ export default function LoginRegisterModal(props,{navigation}){
   const [regEmail,setRegEmail] = useState();
   const [regName, setRegName] = useState() ;
   const [regPassword, setRegPassword] = useState();
-
+  const [regNumber, setRegNumber] = useState();
   const dispatch = useDispatch();
   const users = useSelector(state => state)
   const toLogin = () =>{
@@ -50,12 +50,14 @@ export default function LoginRegisterModal(props,{navigation}){
     setPassword('')
     setRegEmail('')
     setRegName('')
+    setRegNumber('')
     setRegPassword('')
   }
   const toRegister = async () =>{
     const userData = {
       email:regEmail,
       name:regName,
+      number:regNumber,
       password:regPassword
     }
     const {data} = await axios.post(url  + ':8000/api/v1/users/register',userData)
@@ -127,6 +129,7 @@ export default function LoginRegisterModal(props,{navigation}){
             </View>
             <TextInput value={regEmail} onChangeText={setRegEmail} style={styles.input} placeholderTextColor="#ccc" placeholder='Емайл хаяг'/>
             <TextInput value={regName} onChangeText={setRegName} style={styles.input} placeholderTextColor="#ccc" placeholder='Бүтэн нэр'/>
+            <TextInput value={regNumber} onChangeText={setRegNumber} style={styles.input} placeholderTextColor="#ccc" placeholder='Утасны дугаар' />
             <TextInput value={regPassword} onChangeText={setRegPassword} style={styles.input} placeholderTextColor="#ccc" placeholder='Нууц үг' secureTextEntry/>
             <View style={{flexDirection:'row',justifyContent:'space-evenly',width:'100%',marginVertical:10}}>
                 <TouchableOpacity
