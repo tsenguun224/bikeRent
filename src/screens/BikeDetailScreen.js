@@ -107,13 +107,19 @@ export default function BikeDetailScreen({ route, navigation }, props) {
 					<View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
 						{isPressed !== true ? (
 							<View style={styles.textDetail}>
-								<Text style={{ color: "#000", fontSize: 22, marginVertical: 10 }}>
+								<Text style={{ color: "#A702FA", fontSize: 22, marginVertical: 10 }}>
 									{bike.bike.bikeName}
 								</Text>
-								<Text style={{color: "#000", fontSize: 22, marginVertical: 10}}>
+								<Text style={{color: "#A702FA", fontSize: 22, marginVertical: 10}}>
+									Status:New
+								</Text>
+								<Text style={{color: "#A702FA", fontSize: 22, marginVertical: 10}}>
+									Posted:{(bike?.bike?.bikeEzen || {}).name }
+								</Text>
+								<Text style={{color: "#A702FA", fontSize: 22, marginVertical: 10}}>
 									Contact:{(bike?.bike?.bikeEzen || {}).number }
 								</Text>
-								<Text style={{ color: "#000", fontSize: 22 }}>24H-{bike.bike.bikePrice}₮</Text>
+								<Text style={{ color: "#A702FA", fontSize: 22 }}>24H-{bike.bike.bikePrice}₮</Text>
 								<TouchableOpacity onPress={manageBalance} style={styles.button}>
 									<Text style={{ textAlign: "center" }}>Check out</Text>
 								</TouchableOpacity>
@@ -162,11 +168,11 @@ const styles = StyleSheet.create({
 		marginHorizontal: 20
 	},
 	textDetail: {
-		width: 250,
-		height: 200,
+		maxWidth: 450,
+		maxHeight: 400,
 		borderRadius: 12,
 		backgroundColor: "#f5f5f4",
-		alignItems: "center"
+		alignItems: "center",
 	},
 	rentHour: {
 		width: 250,
