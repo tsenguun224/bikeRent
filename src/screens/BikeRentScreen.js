@@ -54,7 +54,7 @@ export default function BikeRentScreen({ navigation }) {
 						onPress={openInsertBikeModal}
 						style={{ flexDirection: "row", justifyContent: "center" }}
 					>
-						<Text style={{ fontSize: 18, marginHorizontal: 10 }}>Insert bike</Text>
+						<Text style={{ fontSize: 18, marginHorizontal: 10 }}>Add own bike</Text>
 						<Ionicons name="add" size={18} color="black" />
 					</TouchableOpacity>
 				</View>

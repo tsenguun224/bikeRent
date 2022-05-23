@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, View,TextInput,TouchableOpacity } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, View,TextInput,TouchableOpacity,ScrollView } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {addBike} from '../redux/actions/bikeActions';
+import ImagePickers from './ImagePicker';
 
 
 
@@ -10,13 +11,14 @@ export default function BikeInsertModal(props) {
   const [bikeName,setBikeName] = useState();
   const [bikeImage,setBikeImage] = useState();
   const [bikePrice, setBikePrice] = useState();
-  
+  const [bikeStatus,setBikeStatus] = useState();
   const insertBike = ()=>{
 
     const bikeData = {
       bikeName:bikeName,
       bikeImage:bikeImage,
       bikePrice:bikePrice,
+      bikeStatus:bikeStatus
     }
     
       dispatch(addBike(bikeData));
@@ -27,23 +29,28 @@ export default function BikeInsertModal(props) {
     setBikeName('')
     setBikeImage('')
     setBikePrice('')
+    setBikeStatus('')
+  }
+  const setImage = (image)=>{
+    setBikeImage(image)
   }
   return (
-    <View style={styles.centeredView}>
+    <ScrollView style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
         visible={props.modalVisible}
        >
-         <View style={styles.centeredView}>
-            <View style={styles.modalView}>
+         <ScrollView style={styles.centeredView}>
+            <ScrollView style={styles.modalView}>
                 <Text style={{fontSize:30,fontWeight:'bold'}}>
                   Insert Bike
                 </Text>
                 <View style={{marginVertical:10}}>
-                  <TextInput value={bikeName} onChangeText={setBikeName} style={styles.input} placeholder='Bike Name'/>
+                  <TextInput value={bikeName} onChangeText={setBikeName} style={styles.input} placeholder='Bike Brand'/>
                   <TextInput value={bikePrice}onChangeText={setBikePrice} style={styles.input} placeholder='Bike Price'/>
-                  <TextInput value={bikeImage}onChangeText={setBikeImage} style={styles.input} placeholder='Bike Image' />
+                  <ImagePickers setImage={(image) => setImage(image)}/>
+                  <TextInput value={bikeStatus} onChangeText={setBikeStatus} style={styles.input} placeholder="Bike status"/>
                 </View>  
                 <View style={{width:150,flexDirection:'row',justifyContent:'space-between'}}>
                     <TouchableOpacity onPress={props.modalClose} style={[styles.buttonClose,styles.button]}>
@@ -53,18 +60,16 @@ export default function BikeInsertModal(props) {
                         <Text style={styles.modalText}>Insert</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-          </View>  
+            </ScrollView>
+          </ScrollView>  
         </Modal>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     marginTop: 22,
   },
   modalView: {
@@ -72,7 +77,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

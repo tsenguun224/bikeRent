@@ -1,12 +1,5 @@
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
-const likeSchema = mongoose.Schema({
-    like:{type:Number,required:true},
-    user:{
-        type:ObjectId,
-        ref:"User"
-    }
-})
 const bikeSchema = new mongoose.Schema({
     bikeName:{
         type:String,
@@ -25,11 +18,9 @@ const bikeSchema = new mongoose.Schema({
         ref:"User",
         required: true
     },
-    likes:[likeSchema],
-    likesNums:{
-        type:Number,
-        required:true,
-        default:0
+    bikeStatus:{
+        type:String,
+        default:"New"
     }
 })
 module.exports = mongoose.model("bikes",bikeSchema)

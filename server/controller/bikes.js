@@ -2,12 +2,13 @@ const Bike = require('../models/bikes');
 
 class bikeController {
     async insertBike(req,res){
-        const { bikeName,bikeImage,bikePrice} = req.body;
+        const { bikeName,bikeImage,bikePrice,bikeStatus} = req.body;
         const newBike = await new Bike({
             bikeName:bikeName,
             bikeImage:bikeImage,
             bikePrice:bikePrice,
-            bikeEzen:req.userId
+            bikeEzen:req.userId,
+            bikeStatus:bikeStatus
         })
         try{
             const result = await newBike.save()
